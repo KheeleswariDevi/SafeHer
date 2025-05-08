@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.2dd85bdf.css",
+    "main.js": "/static/js/main.ee3cacf0.js",
+    "static/media/convo.mp3": "/static/media/convo.0fe21a44c0b410573d61.mp3",
+    "static/media/police.mp3": "/static/media/police.0c4f79a11743a648c670.mp3",
+    "static/media/ringtone.mp3": "/static/media/ringtone.d59dc0d14bed23ed9ad7.mp3",
+    "index.html": "/index.html",
+    "main.2dd85bdf.css.map": "/static/css/main.2dd85bdf.css.map",
+    "main.ee3cacf0.js.map": "/static/js/main.ee3cacf0.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2dd85bdf.css",
+    "static/js/main.ee3cacf0.js"
+  ]
+}
