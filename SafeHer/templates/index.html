@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}SafeHer - Personal Safety App for Women{% endblock %}
+
+{% block extra_styles %}
+<link rel="stylesheet" href="{% static 'style/index.css' %}">
+{% endblock %}
+
+{% block hero_section %}
+<div class="hero-section">
+    <h1>Empower Your Safety with SafeHer</h1>
+    <p>Your reliable partner for personal safety. Discreet, effective, and user-friendly.</p>
+    <a href="#features" class="cta-button">Explore Features</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<main>
+    <section id="tripDuration">
+        <div class="box"> <!-- Apply the box styling here -->
+            <h2>Select Trip Duration:</h2>
+            <select id="tripDurationSelect">
+                <option value="1">Less than 5 minutes</option>
+                <option value="5">Less than 10 minutes</option>
+                <option value="10">Less than 30 minutes</option>
+                <option value="30">30 minutes to 3 hours</option>
+                <option value="60">More than 3 hours</option>
+            </select>
+            <button id="setDurationButton" class="set-duration-button">Set Duration</button>
+        </div>
+    </section>
+
+    <section id="slideshow">
+        <div class="slide-box">
+            <div class="slides"> <!-- New wrapper for slides -->
+                <div class="slide active" id="overviewSlide">
+                    <div class="box overview-box">
+                        <h2>Overview</h2>
+                        <p>SafeHer is an innovative personal safety app designed specifically for women, providing discreet and advanced tools to enhance safety in potentially dangerous situations.</p>
+                    </div>
+                </div>
+                <div class="slide" id="objectivesSlide">
+                    <div class="box objectives-box">
+                        <h2>Objective</h2>
+                        <p>The core objective of SafeHer is to empower women with a practical and easy-to-use safety tool, providing support during moments of uncertainty or danger.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features">
+        <div class="feature">
+            <h2>Emergency Button</h2>
+            <p>Activate the emergency button to instantly send your location and alert authorities or contacts.</p>
+            <button id="emergencyButton" class="cta-button emergency-button">Emergency Button</button>
+            <button id="fakeCallButton" class="cta-button fake-call-button">Fake Call</button>
+            <button id="policeSoundButton" class="cta-button police-sound-button">🚨 Police Sound</button>
+            <button id="incognitoButton" class="cta-button incognito-button">Incognito Mode</button>
+        </button>
+    
+            <div class="timer">
+                <h4>Next Check-In:</h4>
+                <div id="countdown">15:00</div>
+                <div id="minutesLeft">Minutes left to next check-in: <span id="minutesCount">15</span></div>
+            </div>
+    
+            <audio id="ringtone" src="{% static 'audio/ringtone.mp3' %}"></audio>
+            <audio id="conversation" src="{% static 'audio/convo.mp3' %}"></audio>
+            <audio id="policeSound" src="{% static 'audio/police.mp3' %}"></audio> <!-- Add police sound here -->
+        </div>
+    </section>
+</main>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let currentIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const slidesContainer = document.querySelector('.slides');
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+            const offset = -index * 100;
+            slidesContainer.style.transform = `translateX(${offset}%)`;
+        }
+
+        showSlide(currentIndex);
+
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            showSlide(currentIndex);
+        }, 5000);
+
+        const emergencyButton = document.getElementById("emergencyButton");
+        const fakeCallButton = document.getElementById("fakeCallButton");
+        const ringtone = document.getElementById("ringtone");
+        const conversation = document.getElementById("conversation");
+        const countdownElement = document.getElementById("countdown");
+        const minutesCount = document.getElementById("minutesCount");
+        const tripDurationSelect = document.getElementById("tripDurationSelect");
+        const setDurationButton = document.getElementById("setDurationButton");
+        const policeSoundButton = document.getElementById("policeSoundButton");
+        const policeSound = document.getElementById("policeSound");
+
+        let timeLeft = 900; // Default: 15 minutes in seconds
+        let countdownInterval;
+
+        const incognitoButton = document.getElementById("incognitoButton");
+
+        incognitoButton.addEventListener("click", function () {
+            window.location.href = "{% url 'incognito_mode' %}";
+        });
+
+
+        function startCountdown() {
+            countdownInterval = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                countdownElement.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                minutesCount.textContent = minutes;
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    alert("Time's up! Please check in.");
+                }
+                timeLeft--;
+            }, 1000);
+        }
+
+        function updateCountdown() {
+            clearInterval(countdownInterval); // Clear the previous countdown
+            const selectedDuration = parseInt(tripDurationSelect.value);
+            timeLeft = selectedDuration * 60; // Set time left based on selected duration
+            startCountdown(); // Restart the countdown
+        }
+
+        setDurationButton.addEventListener("click", updateCountdown);
+
+        function openGoogleMaps() {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+                const googleMapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
+                window.open(googleMapsUrl, '_blank');
+            }, function () {
+                alert("Could not retrieve location. Make sure location services are enabled.");
+            });
+        }
+
+        emergencyButton.addEventListener("click", function () {
+            // First confirmation prompt
+            const confirmActivation = confirm("Are you sure you want to activate the emergency button?");
+            if (confirmActivation) {
+                // Second confirmation message
+                alert("Your location has been sent to your emergency contact.");
+                openGoogleMaps(); // Sends location
+            }
+        });
+
+        fakeCallButton.addEventListener("click", function () {
+            ringtone.play().catch((error) => {
+                console.error("Failed to play ringtone:", error);
+            });
+
+            setTimeout(() => {
+                ringtone.pause();
+                ringtone.currentTime = 0;
+                conversation.play().catch((error) => {
+                    console.error("Failed to play conversation:", error);
+                });
+            }, 6000);
+
+            setTimeout(() => {
+                conversation.pause();
+                conversation.currentTime = 0;
+            }, 60000);
+        });
+
+        policeSoundButton.addEventListener("click", function () {
+            policeSound.play().catch((error) => {
+                console.error("Failed to play police sound:", error);
+            });
+        });
+    });
+</script>
+{% endblock %}

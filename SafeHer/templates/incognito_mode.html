@@ -1,0 +1,376 @@
+{% load static %}
+{% block title %}SafeHer - Incognito Mode{% endblock %}
+
+{% block extra_styles %}
+<style>
+    /* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #333;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh; /* Full height of the viewport */
+}
+
+/* Custom Navbar */
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+header nav a {
+    color: white;
+    font-size: 1.2em;
+    text-decoration: none;
+    margin-left: 20px;
+    transition: color 0.3s ease;
+}
+
+header nav a:hover {
+    color: #3498db;
+}
+
+/* Main Content Styles (Transaction Page) */
+.transaction-page {
+    background-color: white;
+    border-radius: 10px;
+    padding: 40px;
+    max-width: 900px;
+    margin: 30px auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    flex-grow: 1; /* Allow content to expand and take available space */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.transaction-page h2 {
+    font-size: 2.5em;
+    color: #2980b9;
+    margin-bottom: 20px;
+}
+
+.transaction-page p {
+    font-size: 1.2em;
+    color: #7f8c8d;
+    margin-bottom: 30px;
+}
+
+.cta-button {
+    background-color: #3498db;
+    color: white;
+    padding: 15px 25px;
+    font-size: 1.1em;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #2980b9;
+}
+
+.cta-button.secondary {
+    background-color: #e74c3c;
+}
+
+.cta-button.secondary:hover {
+    background-color: #c0392b;
+}
+
+
+/* Transaction Table */
+.transaction-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.transaction-table th, .transaction-table td {
+    padding: 50px; /* Increased padding for larger table */
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 1.2em; /* Increased font size */
+}
+
+.transaction-table th {
+    background-color: #34495e;
+    color: white;
+    font-weight: bold;
+}
+
+.transaction-table td {
+    color: #7f8c8d;
+}
+
+.transaction-table tr:nth-child(even) {
+    background-color: #f4f4f4; /* Alternating row color */
+}
+
+.transaction-table tr:hover {
+    background-color: #f1f1f1; /* Hover effect on rows */
+}
+
+/* Specific styling for Amount column */
+.transaction-table td:nth-child(3) {
+    font-weight: bold;
+    color: #27ae60; /* Green for positive amounts */
+}
+
+.transaction-table td:nth-child(3):not(:empty) {
+    text-align: right;
+}
+
+.transaction-table td:nth-child(3):not(:empty)[class*="negative"] {
+    color: #e74c3c; /* Red for negative amounts */
+}
+
+.transaction-table td:nth-child(4) {
+    text-align: center;
+    font-weight: bold;
+}
+
+.transaction-table td.completed {
+    color: #2ecc71; /* Green for completed transactions */
+}
+
+.transaction-table td.pending {
+    color: #f39c12; /* Yellow for pending transactions */
+}
+
+.transaction-table td.failed {
+    color: #e74c3c; /* Red for failed transactions */
+}
+
+/* Unlock Button */
+.unlock-button {
+    background-color: #2ecc71;
+    padding: 12px 24px;
+    font-size: 1.2em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.unlock-button:hover {
+    background-color: #27ae60;
+}
+
+/* Hidden Emergency Features */
+.stealth-mode {
+    display: none;  /* Hidden by default */
+    padding: 20px;
+    background-color: #ecf0f1;
+    border-radius: 10px;
+    margin-top: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.stealth-mode.active {
+    display: block;
+}
+
+.hidden-features h2 {
+    font-size: 1.8em;
+    color: #2980b9;
+    margin-bottom: 10px;
+}
+
+.hidden-features p {
+    font-size: 1.2em;
+    color: #7f8c8d;
+}
+
+/* Footer */
+footer {
+    background-color: #34495e;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+}
+
+footer p {
+    font-size: 1em;
+}
+
+</style>
+{% endblock %}
+
+{% block hero_section %}
+<header>
+    <h1>SafeHer - Bank</h1>
+    <nav>
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'view_profile' %}">Profile</a>
+        <a href="{% url 'logout' %}">Log Out</a>
+    </nav>
+</header>
+{% endblock %}
+
+{% block content %}
+<main class="transaction-page">
+    <h2>Account Transactions</h2>
+    <p>Review your account balance and transaction history below. Manage your funds securely with our banking features.</p>
+    
+    <div>
+        <table class="transaction-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Transaction</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2024-12-01</td>
+                    <td>Deposit</td>
+                    <td>$500</td>
+                    <td>Completed</td>
+                </tr>
+                <tr>
+                    <td>2024-12-03</td>
+                    <td>Transfer to John</td>
+                    <td>-$200</td>
+                    <td>Completed</td>
+                </tr>
+                <tr>
+                    <td>2024-12-05</td>
+                    <td>Purchase at Store</td>
+                    <td>-$45</td>
+                    <td>Completed</td>
+                </tr>
+                <tr>
+                    <td>2024-12-07</td>
+                    <td>Salary Deposit</td>
+                    <td>$2,000</td>
+                    <td>Completed</td>
+                </tr>
+                <tr>
+                    <td>2024-12-10</td>
+                    <td>Transfer to Emily</td>
+                    <td>-$150</td>
+                    <td>Completed</td>
+                </tr>
+                <tr>
+                    <td>2024-12-11</td>
+                    <td>Purchase at Online Shop</td>
+                    <td>-$120</td>
+                    <td>Completed</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="stealth-mode" id="stealthMode">
+        <div class="hidden-features">
+            <h2>Send Alert</h2>
+            <p>Activate the emergency alert to discreetly send your location to your contacts.</p>
+            <button id="sendAlertButton" class="cta-button secondary">Send Alert</button>
+
+            <h2>Fake Call</h2>
+            <p>Trigger a fake phone call to create a distraction and help you stay safe.</p>
+            <button id="fakeCallButton" class="cta-button secondary">Fake Call</button>
+
+            <h2>Trigger Siren</h2>
+            <p>Trigger a loud siren to attract attention in case of an emergency.</p>
+            <button id="triggerSirenButton" class="cta-button secondary">Trigger Siren</button>
+        </div>
+    </div>
+
+    <button id="unlockButton" class="unlock-button">Unlock Emergency Features</button>
+
+    <!-- Audio Elements -->
+    <audio id="ringtone" src="{% static 'audio/ringtone.mp3' %}"></audio>
+    <audio id="conversation" src="{% static 'audio/convo.mp3' %}"></audio>
+    <audio id="policeSound" src="{% static 'audio/police.mp3' %}"></audio>
+</main>
+
+<footer>
+    <p>&copy; 2024 SafeHer Inc. All rights reserved.</p>
+</footer>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const unlockButton = document.getElementById("unlockButton");
+        const stealthMode = document.getElementById("stealthMode");
+        const sendAlertButton = document.getElementById("sendAlertButton");
+        const fakeCallButton = document.getElementById("fakeCallButton");
+        const triggerSirenButton = document.getElementById("triggerSirenButton");
+        const ringtone = document.getElementById("ringtone");
+        const conversation = document.getElementById("conversation");
+        const policeSound = document.getElementById("policeSound");
+
+        // Initially, hide the emergency features
+        stealthMode.style.display = "none";  // Hidden by default
+
+        let unlockClickCount = 0;
+
+        // Unlock the features after clicking the unlock button twice
+        unlockButton.addEventListener("click", function () {
+            unlockClickCount++;
+            if (unlockClickCount >= 2) {
+                stealthMode.style.display = "block";  // Show the features after 2 clicks
+                unlockButton.style.display = "none";  // Hide the unlock button after unlocking
+            }
+        });
+
+        // Send Alert Functionality
+        sendAlertButton.addEventListener("click", function () {
+            alert("Emergency alert sent!");
+            // Here you can link this to an actual emergency alert system (e.g., SMS or API request)
+        });
+
+        // Fake Call Functionality
+        fakeCallButton.addEventListener("click", function () {
+            ringtone.play().catch((error) => {
+                console.error("Failed to play ringtone:", error);
+            });
+
+            setTimeout(() => {
+                ringtone.pause();
+                ringtone.currentTime = 0;
+                conversation.play().catch((error) => {
+                    console.error("Failed to play conversation:", error);
+                });
+            }, 6000);
+
+            setTimeout(() => {
+                conversation.pause();
+                conversation.currentTime = 0;
+            }, 60000);
+        });
+
+        // Trigger Siren Functionality
+        triggerSirenButton.addEventListener("click", function () {
+            policeSound.play().catch((error) => {
+                console.error("Failed to play police sound:", error);
+            });
+        });
+    });
+</script>
+{% endblock %}

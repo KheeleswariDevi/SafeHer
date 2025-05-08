@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Thank You{% endblock %}
+
+{% block content %}
+<div class="content-container">
+    <h1>Thank You!</h1>
+    <p>Your message has been successfully sent. We will get back to you soon.</p>
+</div>
+{% endblock %}
+
+{% block extra_styles %}
+<style>
+    :root {
+        --font-family-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        --primary-color: #4A148C;
+        --secondary-color: #555555;
+        --background-color: #f9f9f9;
+        --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .content-container {
+        width: 75%;
+        margin: 50px auto;
+        padding: 40px;
+        background-color: var(--background-color);
+        border-radius: 12px;
+        box-shadow: var(--box-shadow);
+        font-family: var(--font-family-main);
+        line-height: 1.6;
+        color: #333333;
+        text-align: center;  /* Center the text */
+    }
+
+    h1 {
+        color: var(--primary-color);
+        font-size: 2.8rem;
+        margin-bottom: 25px;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+    }
+
+    .content-container p {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+        color: var(--secondary-color);
+    }
+
+    @media screen and (max-width: 768px) {
+        .content-container {
+            width: 90%;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+        }
+
+        p {
+            font-size: 1rem;
+        }
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block title %}Terms of Service{% endblock %}
+
+{% block content %}
+<div class="content-container">
+    <h1>Terms of Service</h1>
+    <p>Welcome to SafeHer! Please review the following terms and conditions carefully before using our services. By accessing or using SafeHer, you acknowledge and agree to be bound by these terms. If you disagree with any part of the terms, you may not access the service.</p>
+
+    <h2>1. Acceptance of Terms</h2>
+    <p>By accessing or using SafeHer, you acknowledge and agree to comply with the terms outlined in this agreement. If you do not agree to these terms, please refrain from using our services. We may update or change these terms at any time, and such changes will be reflected in this document.</p>
+
+    <h2>2. Services Provided</h2>
+    <p>SafeHer offers real-time tracking and location-based safety solutions designed to help users ensure personal safety and well-being. The following features are included:</p>
+    <ul>
+        <li>Real-time location sharing with designated contacts.</li>
+        <li>Emergency alert system for instant help requests.</li>
+        <li>Geofencing and safety zone notifications.</li>
+        <li>24/7 customer support for service inquiries.</li>
+    </ul>
+
+    <h2>3. Usage Restrictions</h2>
+    <p>Users are strictly prohibited from engaging in activities that misuse the service, distribute inappropriate content, or violate applicable safety laws and regulations. Examples of prohibited activities include, but are not limited to:</p>
+    <ul>
+        <li>Sharing false information or misleading alerts.</li>
+        <li>Harassing other users or attempting to harm or threaten them.</li>
+        <li>Engaging in illegal activities using our service.</li>
+        <li>Bypassing or attempting to exploit security measures.</li>
+    </ul>
+    <p>If SafeHer detects any breach of these terms, we reserve the right to terminate or suspend your access to the service immediately without prior notice.</p>
+
+    <h2>4. User Responsibilities</h2>
+    <p>As a user, you agree to:</p>
+    <ul>
+        <li>Provide accurate and up-to-date personal information during registration.</li>
+        <li>Keep your account credentials secure and confidential.</li>
+        <li>Use the service in a manner that complies with all applicable laws.</li>
+    </ul>
+
+    <h2>5. Termination of Service</h2>
+    <p>SafeHer reserves the right to terminate your account or access to the service at any time without prior notice if any breach of these terms is detected. Examples of breaches include repeated misuse of services, unauthorized access attempts, or violating local laws while using SafeHer.</p>
+
+    <h2>6. Limitation of Liability</h2>
+    <p>SafeHer is not liable for any indirect, incidental, special, or consequential damages resulting from the use or inability to use our services. Our total liability for any claims arising out of or relating to these terms is limited to the amount you paid for the service during the past 12 months.</p>
+
+    <h2>7. Governing Law</h2>
+    <p>This agreement shall be governed by and construed in accordance with the laws of the jurisdiction in which SafeHer operates. Any legal disputes will be resolved in the courts located within that jurisdiction.</p>
+
+    <h2>8. Changes to Terms</h2>
+    <p>We reserve the right to update or modify these Terms of Service at any time. Any changes will be effective immediately upon posting on this page, with the date of the last update indicated at the bottom. Please review these terms periodically to stay informed about our policies.</p>
+
+    <p>Last updated: December 2024</p>
+
+</div>
+{% endblock %}
+
+{% block extra_styles %}
+<style>
+    :root {
+        --font-family-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        --primary-color: #4A148C;
+        --secondary-color: #555555;
+        --background-color: #f9f9f9;
+        --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .content-container {
+        width: 75%;
+        margin: 50px auto;
+        padding: 40px;
+        background-color: var(--background-color);
+        border-radius: 12px;
+        box-shadow: var(--box-shadow);
+        font-family: var(--font-family-main);
+        line-height: 1.6;
+        color: #333333;
+    }
+
+    h1 {
+        color: var(--primary-color);
+        font-size: 2.8rem;
+        margin-bottom: 25px;
+        text-transform: uppercase;
+        text-align: center;
+        letter-spacing: 1.5px;
+    }
+
+    h2 {
+        color: var(--primary-color);
+        font-size: 1.8rem;
+        margin-top: 20px;
+    }
+
+    .content-container p {
+        font-size: 1rem;
+        margin-bottom: 20px;
+        color: var(--secondary-color);
+    }
+
+    ul {
+        margin-left: 20px;
+        color: var(--secondary-color);
+        font-size: 1rem;
+    }
+
+    ul li {
+        margin-bottom: 10px;
+    }
+
+    @media screen and (max-width: 768px) {
+        .content-container {
+            width: 90%;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        p, ul li {
+            font-size: 0.95rem;
+        }
+    }
+</style>
+{% endblock %}

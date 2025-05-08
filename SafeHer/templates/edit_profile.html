@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background-color: #f4f4f9;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .profile-container {
+        width: 60%;
+        max-width: 900px;
+        margin: 40px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        font-size: 2.5rem;
+        color: #2c3e50;
+        margin-bottom: 20px;
+    }
+
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    label {
+        font-size: 1.2rem;
+        color: #555;
+    }
+
+    input, textarea, select {
+        padding: 12px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    .btn-submit {
+        padding: 12px 20px;
+        background-color: #6a0dad;
+        color: white;
+        font-size: 1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+
+    .btn-submit:hover {
+        background-color: #9d62c6;
+    }
+
+    .emergency-contacts {
+        margin-top: 20px;
+    }
+
+    .emergency-contact {
+        border: 1px solid #ccc;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+
+    .emergency-contact input,
+    .emergency-contact select {
+        margin-bottom: 10px;
+    }
+
+</style>
+
+<div class="profile-container">
+    <h2>Edit Profile</h2>
+    <form method="post" enctype="multipart/form-data" class="form-container">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>Profile Picture</label>
+            {{ form.profile_picture }}
+        </div>
+
+        <div class="form-group">
+            <label>Name</label>
+            {{ form.name }}
+        </div>
+
+        <div class="form-group">
+            <label>Date of Birth</label>
+            {{ form.date_of_birth }}
+        </div>
+
+        <div class="form-group">
+            <label>Address</label>
+            {{ form.address }}
+        </div>
+
+        <div class="form-group">
+            <label>Favorite Locations</label>
+            {{ form.favorite_locations }}
+        </div>
+
+        <!-- Emergency Contacts Section -->
+        <div class="emergency-contacts">
+            <h3>Emergency Contacts</h3>
+
+            <!-- Emergency Contact 1 -->
+            <div class="emergency-contact">
+                <div class="form-group">
+                    <label>Contact Name</label>
+                    <input type="text" name="emergency_contact_name_1" value="{{ profile.emergency_contact_name_1 }}" placeholder="John Doe">
+                </div>
+
+                <div class="form-group">
+                    <label>Contact Phone Number</label>
+                    <input type="tel" name="emergency_contact_phone_1" value="{{ profile.emergency_contact_phone_1 }}" placeholder="555-555-5555">
+                </div>
+
+                <div class="form-group">
+                    <label>Priority Level</label>
+                    <select name="emergency_contact_priority_1">
+                        <option value="High" {% if profile.emergency_contact_priority_1 == 'High' %} selected {% endif %}>High</option>
+                        <option value="Medium" {% if profile.emergency_contact_priority_1 == 'Medium' %} selected {% endif %}>Medium</option>
+                        <option value="Low" {% if profile.emergency_contact_priority_1 == 'Low' %} selected {% endif %}>Low</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Emergency Contact 2 (Optional) -->
+            <div class="emergency-contact">
+                <div class="form-group">
+                    <label>Contact Name</label>
+                    <input type="text" name="emergency_contact_name_2" value="{{ profile.emergency_contact_name_2 }}" placeholder="Jane Doe">
+                </div>
+
+                <div class="form-group">
+                    <label>Contact Phone Number</label>
+                    <input type="tel" name="emergency_contact_phone_2" value="{{ profile.emergency_contact_phone_2 }}" placeholder="555-555-5555">
+                </div>
+
+                <div class="form-group">
+                    <label>Priority Level</label>
+                    <select name="emergency_contact_priority_2">
+                        <option value="High" {% if profile.emergency_contact_priority_2 == 'High' %} selected {% endif %}>High</option>
+                        <option value="Medium" {% if profile.emergency_contact_priority_2 == 'Medium' %} selected {% endif %}>Medium</option>
+                        <option value="Low" {% if profile.emergency_contact_priority_2 == 'Low' %} selected {% endif %}>Low</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Emergency Contact 3 (Optional) -->
+            <div class="emergency-contact">
+                <div class="form-group">
+                    <label>Contact Name</label>
+                    <input type="text" name="emergency_contact_name_3" value="{{ profile.emergency_contact_name_3 }}" placeholder="Emergency Contact 3">
+                </div>
+
+                <div class="form-group">
+                    <label>Contact Phone Number</label>
+                    <input type="tel" name="emergency_contact_phone_3" value="{{ profile.emergency_contact_phone_3 }}" placeholder="555-555-5555">
+                </div>
+
+                <div class="form-group">
+                    <label>Priority Level</label>
+                    <select name="emergency_contact_priority_3">
+                        <option value="High" {% if profile.emergency_contact_priority_3 == 'High' %} selected {% endif %}>High</option>
+                        <option value="Medium" {% if profile.emergency_contact_priority_3 == 'Medium' %} selected {% endif %}>Medium</option>
+                        <option value="Low" {% if profile.emergency_contact_priority_3 == 'Low' %} selected {% endif %}>Low</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-submit">Update Profile</button>
+    </form>
+</div>
+{% endblock %}

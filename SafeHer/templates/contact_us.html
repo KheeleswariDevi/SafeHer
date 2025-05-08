@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+<div class="content-container">
+    <h1>Contact Us</h1>
+    <p>If you have any questions, need support, or want to provide feedback, feel free to reach out to us. Our team is here to help!</p>
+
+    <h2>Email & Business Inquiries</h2>
+    <p>You can reach us via email at <a href="mailto:support@safeher.com">support@safeher.com</a>. Our support team typically responds within 24-48 hours.</p>
+    <p>For business partnerships, media inquiries, or other corporate matters, please contact us at <a href="mailto:business@safeher.com">business@safeher.com</a>.</p>
+
+    <h2>Contact Form & Feedback</h2>
+    <p>Use the form below to send us a message directly or provide feedback on how we can improve our services:</p>
+    <form method="POST" action="{% url 'submit_contact' %}" class="contact-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="5" class="form-control" required></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Message</button>
+    </form>
+
+    <h2>Social Media</h2>
+    <p>Stay connected with us on our social media platforms for updates, tips, and promotions:</p>
+    <div class="social-media-links">
+        <a href="https://facebook.com" target="_blank" class="social-icon facebook">Facebook</a>
+        <a href="https://twitter.com" target="_blank" class="social-icon twitter">Twitter</a>
+        <a href="https://instagram.com" target="_blank" class="social-icon instagram">Instagram</a>
+        <a href="https://linkedin.com" target="_blank" class="social-icon linkedin">LinkedIn</a>
+        <a href="https://youtube.com" target="_blank" class="social-icon youtube">YouTube</a>
+    </div>
+
+    <h2>Office Address & Hours</h2>
+    <p>If you'd prefer to visit us in person or send us mail, you can reach our office at:</p>
+    <p><strong>SafeHer, Inc.<br>123 Safety Lane, Suite 200<br>San Francisco, CA 94105</strong></p>
+    <p><strong>Business Hours:</strong> 9 AM - 5 PM, Monday to Friday</p>
+
+</div>
+{% endblock %}
+
+{% block extra_styles %}
+<style>
+    :root {
+        --font-family-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        --primary-color: #4A148C;
+        --secondary-color: #555555;
+        --background-color: #f9f9f9;
+        --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .content-container {
+        width: 75%;
+        margin: 50px auto;
+        padding: 40px;
+        background-color: var(--background-color);
+        border-radius: 12px;
+        box-shadow: var(--box-shadow);
+        font-family: var(--font-family-main);
+        line-height: 1.6;
+        color: #333333;
+    }
+
+    h1 {
+        color: var(--primary-color);
+        font-size: 2.8rem;
+        margin-bottom: 25px;
+        text-transform: uppercase;
+        text-align: center;
+        letter-spacing: 1.5px;
+    }
+
+    h2 {
+        color: var(--primary-color);
+        font-size: 1.8rem;
+        margin-top: 20px;
+    }
+
+    .content-container p {
+        font-size: 1rem;
+        margin-bottom: 20px;
+        color: var(--secondary-color);
+    }
+
+    .contact-form .form-group {
+        margin-bottom: 20px;
+    }
+
+    .contact-form label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .contact-form .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 1rem;
+    }
+
+    .contact-form textarea.form-control {
+        resize: none;
+    }
+
+    .form-submit {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: var(--primary-color);
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s;
+    }
+
+    .form-submit:hover {
+        background-color: #6A1BCC;
+    }
+
+    .social-media-links {
+        display: flex;
+        justify-content: center;
+        gap: 30px; /* Increased gap between icons */
+        margin-top: 50px; /* Increased margin on top */
+        margin-bottom: 50px; /* Increased margin on the bottom */
+        flex-wrap: wrap; /* Allow wrapping if necessary */
+    }
+
+    .social-media-links .social-icon {
+    text-decoration: none;
+    font-size: 1rem; /* Increased font size for better visibility */
+    padding: 25px 25px; /* Increased padding for larger clickable area */
+    border-radius: 20px; /* Slightly larger border radius for a rounded effect */
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    text-align: center;
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Center text horizontally */
+    align-items: center; /* Center text vertically */
+    transition: background-color 0.3s;
+    }
+
+
+    .facebook {
+        background-color: #3b5998;
+    }
+    .facebook:hover {
+        background-color: #365899;
+    }
+
+    .twitter {
+        background-color: #1DA1F2;
+    }
+    .twitter:hover {
+        background-color: #0d95e8;
+    }
+
+    .instagram {
+        background-color: #E4405F;
+    }
+    .instagram:hover {
+        background-color: #c13584;
+    }
+
+    .linkedin {
+        background-color: #0077b5;
+    }
+    .linkedin:hover {
+        background-color: #005c8e;
+    }
+
+    .youtube {
+        background-color: #FF0000;
+    }
+    .youtube:hover {
+        background-color: #e60000;
+    }
+
+    .btn-chat {
+        display: inline-block;
+        margin: 15px 0;
+        padding: 10px 20px;
+        background-color: var(--primary-color);
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s;
+    }
+
+    .btn-chat:hover {
+        background-color: #6A1BCC;
+    }
+
+    @media screen and (max-width: 768px) {
+        .content-container {
+            width: 90%;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        p, ul li {
+            font-size: 0.95rem;
+        }
+
+        .btn-chat, .form-submit {
+            font-size: 0.9rem;
+        }
+
+        .social-media-links {
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+</style>
+{% endblock %}
+

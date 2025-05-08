@@ -1,0 +1,561 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Real-Time Tracking - SafeHer
+{% endblock %}
+
+{% block extra_styles %}
+<style>
+    /* General Page Styling */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f9;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+
+    h1, h2, h3 {
+        color: #6a0dad;
+    }
+
+    p {
+        color: black;
+    }
+    
+    /* Hero Section */
+    .hero-section {
+        background: linear-gradient(135deg, #6a0dad, #d28fdd); /* Softer violet to light pink gradient */
+        color: white;
+        padding: 40px 0; /* Increased padding for more space */
+        text-align: center;
+    }
+
+    .hero-section h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        color: white;
+    }
+
+    .hero-section p {
+        font-size: 1.2em;
+        color: white;
+    }
+
+    .cta-button {
+        background-color: #d28fdd;
+        color: white;
+        padding: 15px 30px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 1.2em;
+        transition: background 0.3s ease, transform 0.3s ease;
+        border: none;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+
+    .cta-button:hover {
+        background-color: #a55bb5;
+        transform: scale(1.05);
+    }
+
+    /* Tracking Info & Directions */
+    .tracking-info, .directions-input, .direction-step {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin: 20px;
+    }
+
+    .tracking-info h2, .directions-input h2 {
+        color: #6a0dad;
+    }
+
+    /* Report Hazardous Areas Section */
+    .report-section {
+        background-color: #f9f9f9;
+        padding: 30px;
+        border-radius: 10px;
+        margin: 40px 0;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        font-family: Arial, sans-serif;
+    }
+
+    .report-heading {
+        font-size: 2em;
+        color: #6a0dad;
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+
+    .report-info {
+        font-size: 1.2em;
+        color: #555;
+        margin-bottom: 25px;
+    }
+
+
+    input[type="text"], select {
+        width: calc(100% - 24px);
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-bottom: 10px;
+    }
+
+    #map {
+        height: 400px;
+        margin: 20px 0;
+        border-radius: 5px;
+    }
+
+    /* Step Content Styling */
+    .step-content {
+        background: #f9f9f9;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 10px 0;
+        font-size: 1em;
+        color: #333;
+    }
+
+    .step-content b {
+        color: #6a0dad;
+    }
+
+    /* Controls for Steps */
+    .step-controls {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+
+    .step-controls button {
+        flex: 1;
+        margin: 0 5px;
+    }
+
+    /* Hazard Reports Section */
+    .report-card {
+        background: #f9f9f9;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 5px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .report-card h2 {
+        color: #6a0dad;
+        margin-bottom: 10px;
+    }
+
+    .report-card p {
+        color: #333;
+    }
+
+    /* Links Styling */
+    .links {
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    /* Mobile-Friendly Adjustments */
+    @media (max-width: 768px) {
+        .hero-section h1 {
+            font-size: 2em;
+        }
+
+        .cta-button {
+            font-size: 1em;
+            padding: 12px 24px;
+        }
+
+        #map {
+            height: 300px;
+        }
+
+        .tracking-info, .directions-input, .direction-step {
+            margin: 10px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block hero_section %}
+<div class="hero-section">
+    <h1>Real-Time Tracking for Peace of Mind</h1>
+    <p>Track your location and share it with trusted contacts.</p>
+    <button id="startTracking" class="cta-button">Start Tracking</button>
+    <button id="stopTracking" class="cta-button" disabled>Stop Tracking</button>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="tracking-info">
+    <h2>Tracking Status</h2>
+    <p id="status">Tracking is currently OFF.</p>
+</section>
+
+<div class="directions-input">
+    <h2>Plan Your Route</h2>
+    <input type="text" id="start" placeholder="Enter starting location" />
+    <input type="text" id="end" placeholder="Enter destination" />
+    <select id="mode">
+        <option value="DRIVING">Driving</option>
+        <option value="WALKING">Walking</option>
+    </select>
+    <button id="getDirections" class="cta-button">Get Directions</button>
+</div>
+
+<div id="travelTime" class="tracking-info" style="display: none;">
+    <h2>Estimated Travel Time</h2>
+    <p id="estimatedTime"></p>
+</div>
+
+<div class="tracking-info" style="background: #fff; padding: 20px; margin: 20px 0; border-radius: 8px;">
+    <h3>Map Marker Color Guide</h3>
+    <p><strong>Red Circle:</strong> Indicates a reported hazard location, marking a potentially dangerous area.</p>
+    <p><strong>Red Marker:</strong> Represents a nearby fire station, important for fire emergencies and safety.</p>
+    <p><strong>Green Marker:</strong> Indicates a nearby hospital, showing the closest medical facility for emergencies.</p>
+    <p><strong>Blue Marker:</strong> Represents a nearby police station, important for safety and emergencies.</p>
+</div>
+
+<div id="map"></div>
+
+<div class="direction-step" id="directionStep" style="display: none;">
+    <h3>Direction Step</h3>
+    <div id="currentStep" class="step-content"></div>
+    <div class="step-controls">
+        <button id="prevStep" class="cta-button" disabled>Previous</button>
+        <button id="nextStep" class="cta-button" disabled>Next</button>
+    </div>
+</div>
+
+
+<div class="report-section">
+    <h3 class="report-heading">Report Unsafe Locations</h3>
+    <p class="report-info">
+        Have you noticed an unsafe area? Help us stay informed by reporting hazardous locations on the map. Your input helps everyone stay safe.
+    </p>
+    <a href="{% url 'add_hazard_report' %}" class="cta-button">Report a Hazard</a>
+</div>
+
+{% for report in reports_data %}
+    <div class="report-card">
+        <h2>{{ report.location_name }}</h2>
+        <p><strong>Description:</strong> {{ report.description }}</p>
+        <p><strong>Reported by:</strong> {{ report.reported_by }}</p>
+        <p><strong>Timestamp:</strong> {{ report.timestamp }}</p>
+    </div>
+    {% empty %}
+    <p>No reports have been submitted yet.</p>
+    {% endfor %}
+</div>
+
+<!-- Pass hazard reports data as JSON using json_script -->
+<script id="hazard-reports-data" type="application/json">
+    {{ reports_data|json_script:"hazard-reports-data" }}
+</script>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxfxa7Q0iir1psGZ-FYdiRBnSHsVsTG7s&callback=initMap&libraries=places" async defer></script>
+
+<script>
+    let trackingActive = false;
+    let watchId;
+    let map;
+    let userMarker;
+    let service;
+    let places = [];
+    let directionsService;
+    let directionsRenderer;
+    let steps = [];
+    let currentStepIndex = 0;
+    const placesTypes = ['hospital', 'police', 'fire_station'];
+
+    function initMap() {
+    const defaultLocation = { lat: 53.349805, lng: -6.26031 };
+
+    map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 13,
+        center: defaultLocation
+    });
+
+    userMarker = new google.maps.Marker({
+        position: defaultLocation,
+        map: map,
+        title: "Your Location"
+    });
+
+    service = new google.maps.places.PlacesService(map);
+    directionsService = new google.maps.DirectionsService();
+    directionsRenderer = new google.maps.DirectionsRenderer();
+    directionsRenderer.setMap(map);
+
+    displayHazardReports();
+}
+
+    function displayHazardReports() {
+        let hazardReports = JSON.parse(document.getElementById("hazard-reports-data").textContent);
+        let bounds = new google.maps.LatLngBounds();
+
+        hazardReports.forEach((report) => {
+            const lat = report.latitude;
+            const lng = report.longitude;
+            const position = { lat: parseFloat(lat), lng: parseFloat(lng) };
+
+            bounds.extend(position);
+
+            const circle = new google.maps.Circle({
+                map: map,
+                center: position,
+                radius: 500,
+                fillColor: "#FF0000",
+                fillOpacity: 0.3,
+                strokeColor: "#FF0000",
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+            });
+
+            const marker = new google.maps.Marker({
+                position: position,
+                map: map,
+                title: report.location_name,
+                icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    fillColor: "#FF0000",
+                    fillOpacity: 1,
+                    strokeColor: "#FF0000",
+                    strokeOpacity: 1,
+                    strokeWeight: 1,
+                    scale: 10,
+                },
+            });
+
+            const infoWindow = new google.maps.InfoWindow({
+                content: `<h4>${report.location_name}</h4><p>${report.description}</p><p>Reported by: ${report.reported_by}</p><p>Timestamp: ${report.timestamp}</p>`,
+            });
+
+            marker.addListener("click", () => {
+                infoWindow.open(map, marker);
+            });
+        });
+
+        map.fitBounds(bounds);
+    }
+
+    function startTracking() {
+        if (navigator.geolocation) {
+            watchId = navigator.geolocation.watchPosition(position => {
+                const newPosition = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+
+                userMarker.setPosition(newPosition);
+                map.setCenter(newPosition);
+                findNearbyPlaces(newPosition);
+            }, showError, {
+                enableHighAccuracy: true,
+                maximumAge: 0,
+                timeout: 100000
+            });
+
+            document.getElementById("status").innerText = "Tracking is currently ON.";
+            document.getElementById("startTracking").disabled = true;
+            document.getElementById("stopTracking").disabled = false;
+            trackingActive = true;
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+
+    function stopTracking() {
+        if (trackingActive) {
+            navigator.geolocation.clearWatch(watchId);
+            document.getElementById("status").innerText = "Tracking is currently OFF.";
+            document.getElementById("startTracking").disabled = false;
+            document.getElementById("stopTracking").disabled = true;
+            trackingActive = false;
+        }
+    }
+
+    document.getElementById("startTracking").addEventListener("click", startTracking);
+    document.getElementById("stopTracking").addEventListener("click", stopTracking);
+
+    function findNearbyPlaces(location) {
+        places.forEach(marker => marker.setMap(null));
+        places = [];
+
+        placesTypes.forEach(type => {
+            const request = {
+                location: location,
+                radius: 5000,
+                type: type
+            };
+
+            service.nearbySearch(request, (results, status) => {
+                if (status === google.maps.places.PlacesServiceStatus.OK) {
+                    results.forEach(result => {
+                        const marker = new google.maps.Marker({
+                            position: result.geometry.location,
+                            map: map,
+                            title: result.name,
+                            icon: getIconForPlaceType(type)
+                        });
+
+                        marker.addListener('click', () => {
+                            alert(`You clicked on ${result.name}`);
+                        });
+
+                        places.push(marker);
+                    });
+                }
+            });
+        });
+    }
+
+    function getIconForPlaceType(type) {
+        switch(type) {
+            case 'hospital':
+                return 'https://maps.google.com/mapfiles/ms/icons/green-dot.png';
+            case 'police':
+                return 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+            case 'fire_station':
+                return 'https://maps.google.com/mapfiles/ms/icons/red-dot.png';
+            default:
+                return 'https://maps.google.com/mapfiles/ms/icons/gray-dot.png';
+        }
+    }
+
+    document.getElementById('getDirections').onclick = function() {
+        const start = document.getElementById('start').value;
+        const end = document.getElementById('end').value;
+        const mode = document.getElementById('mode').value;
+
+        if (!start || !end) {
+            alert("Please enter both a starting location and destination.");
+            return;
+        }
+
+        const request = {
+            origin: start,
+            destination: end,
+            travelMode: google.maps.TravelMode[mode]
+        };
+
+        directionsService.route(request, (response, status) => {
+            if (status === google.maps.DirectionsStatus.OK) {
+                directionsRenderer.setDirections(response);
+                steps = response.routes[0].legs[0].steps;
+                currentStepIndex = 0;
+                displayTravelTime(response.routes[0].legs[0].duration.text);
+                showStep(currentStepIndex);
+            } else {
+                console.log('Directions request failed due to ' + status);
+                alert("Error: Directions not found. Please check your inputs.");
+            }
+        });
+    };
+
+    function displayTravelTime(time) {
+        document.getElementById('estimatedTime').innerText = time;
+        document.getElementById('travelTime').style.display = 'block';
+    }
+
+    function showStep(index) {
+        if (currentStepIndex >= steps.length || currentStepIndex < 0) return;
+
+        const step = steps[currentStepIndex];
+        map.setCenter(step.start_location);
+        const stepMarker = new google.maps.Marker({
+            position: step.start_location,
+            map: map,
+            title: step.instructions
+        });
+
+        document.getElementById('currentStep').innerHTML = step.instructions;
+        document.getElementById('directionStep').style.display = 'block';
+
+        document.getElementById('nextStep').disabled = currentStepIndex >= steps.length - 1;
+        document.getElementById('prevStep').disabled = currentStepIndex <= 0;
+    }
+
+    document.getElementById('nextStep').onclick = function() {
+        if (currentStepIndex < steps.length - 1) {
+            currentStepIndex++;
+            showStep(currentStepIndex);
+        }
+    };
+
+    document.getElementById('prevStep').onclick = function() {
+        if (currentStepIndex > 0) {
+            currentStepIndex--;
+            showStep(currentStepIndex);
+        }
+    };
+
+    function showError(error) {
+        switch(error.code) {
+            case error.PERMISSION_DENIED:
+                alert("User denied the request for Geolocation.");
+                break;
+            case error.POSITION_UNAVAILABLE:
+                alert("Location information is unavailable.");
+                break;
+            case error.TIMEOUT:
+                alert("The request to get your location timed out.");
+                break;
+            case error.UNKNOWN_ERROR:
+                alert("An unknown error occurred.");
+                break;
+        }
+    }
+
+    function findNearbyPlaces(location) {
+    if (!service) return;
+
+    // Clear old markers
+    places.forEach(marker => marker.setMap(null));
+    places = []; // Reset the array
+
+    const request = {
+        location: location,
+        radius: 1000, // Search radius in meters
+        types: placesTypes, // Types of nearby points to search
+    };
+
+    service.nearbySearch(request, (results, status) => {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+            results.forEach(place => {
+                const marker = new google.maps.Marker({
+                    position: place.geometry.location,
+                    map: map,
+                    title: place.name,
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        scale: 6,
+                        fillColor: "#007bff",
+                        fillOpacity: 1,
+                        strokeWeight: 1,
+                    },
+                });
+
+                places.push(marker); // Keep track of all added markers
+            });
+        } else {
+            console.error('Error searching nearby places: ', status);
+        }
+    });
+}
+
+</script>
+{% endblock %}

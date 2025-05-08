@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background-color: #f4f4f9;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .profile-container {
+        width: 65%;
+        max-width: 1100px;
+        margin: 80px auto;
+        background: white;
+        padding: 60px;
+        border-radius: 10px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    h2 {
+        font-size: 2.5rem;
+        color: #2c3e50;
+        margin-bottom: 20px;
+    }
+
+    .profile-card {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+        margin-bottom: 20px;
+    }
+
+    .profile-pic-container {
+        flex-shrink: 0;
+    }
+
+    .profile-pic {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #2c3e50;
+    }
+
+    .profile-info {
+        font-size: 1.2rem;
+        line-height: 1.8;
+    }
+
+    .profile-info p {
+        margin-bottom: 10px;
+        color: black;
+        font-weight: bold;
+    }
+
+    .profile-info strong {
+        color: #555;
+    }
+
+    .btn-edit,
+    .btn-payment,
+    .back-btn {
+        padding: 12px 20px;
+        background-color: #6a0dad;
+        color: white;
+        font-size: 1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 20px;
+    }
+
+    .btn-edit:hover,
+    .btn-payment:hover,
+    .back-btn:hover {
+        background-color: #9d62c6;
+    }
+
+    .emergency-contacts {
+        margin-top: 20px;
+    }
+
+    .emergency-contact {
+        background-color: #4b4b4b;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+
+</style>
+
+<div class="profile-container">
+    <h2>Your Profile</h2>
+
+    <div class="profile-card">
+        <div class="profile-pic-container">
+            {% if profile.profile_picture %}
+                <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="profile-pic">
+            {% else %}
+                <img src="/static/default-profile.png" alt="Default Profile Picture" class="profile-pic">
+            {% endif %}
+        </div>
+
+        <div class="profile-info">
+            <p><strong>Name:</strong> {{ profile.name }}</p>
+            <p><strong>Date of Birth:</strong> {{ profile.date_of_birth }}</p>
+            <p><strong>Address:</strong> {{ profile.address }}</p>
+            <p><strong>Favorite Locations:</strong> {{ profile.favorite_locations }}</p>
+        </div>
+    </div>
+
+    <div class="emergency-contacts">
+        <h3>Emergency Contacts</h3>
+
+        {% if profile.emergency_contact_name_1 %}
+            <div class="emergency-contact">
+                <p><strong>Contact Name:</strong> {{ profile.emergency_contact_name_1 }}</p>
+                <p><strong>Phone Number:</strong> {{ profile.emergency_contact_phone_1 }}</p>
+                <p class="priority"><strong>Priority Level:</strong> {{ profile.emergency_contact_priority_1 }}</p>
+            </div>
+        {% endif %}
+        {% if profile.emergency_contact_name_2 %}
+            <div class="emergency-contact">
+                <p><strong>Contact Name:</strong> {{ profile.emergency_contact_name_2 }}</p>
+                <p><strong>Phone Number:</strong> {{ profile.emergency_contact_phone_2 }}</p>
+                <p class="priority"><strong>Priority Level:</strong> {{ profile.emergency_contact_priority_2 }}</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <a href="{% url 'edit_profile' %}" class="btn-edit">Edit Profile</a>
+    <a href="{% url 'payment' %}" class="btn-payment">Go to Payment Page</a>
+    <a href="{% url 'index' %}" class="back-btn">Back to Home</a>
+</div>
+
+{% endblock %}

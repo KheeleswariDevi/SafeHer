@@ -1,0 +1,430 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: #f3e8f4; /* Light lavender background */
+    color: #4b0082; /* Dark violet for text */
+}
+
+.content-container {
+    width: 80%;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #ffffff;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+
+p {
+    color: #555;
+    line-height: 1.6;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+ul li {
+    margin-bottom: 10px;
+}
+
+a {
+    color: #6a0dad;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+html, body {
+    height: 100%;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1; /* Pushes footer down */
+}
+
+header {
+    background: linear-gradient(135deg, #6a0dad, #d28fdd); /* Softer violet to light pink gradient */
+    color: white;
+    padding: 40px 0; /* Increased padding for more space */
+    text-align: center;
+}
+
+.logo {
+    font-size: 2.5em; /* Logo size */
+    font-weight: bold;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+}
+
+.nav-links li {
+    display: inline;
+    margin: 0 15px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #ffd54f; /* Light yellow on hover */
+}
+
+.hero-section {
+    padding: 40px 20px;
+}
+
+.hero-section h1 {
+    font-size: 2.5em; /* Consistent header size */
+    margin: 10px 0;
+}
+
+.hero-section p {
+    font-size: 1.2em; /* Consistent paragraph size */
+}
+
+.cta-button {
+    background-color: #d28fdd; /* Light pink */
+    color: white;
+    padding: 15px 25px; /* Increased padding for consistency */
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #a55bb5; /* Darker pink */
+    transform: scale(1.05); /* Slightly enlarge button on hover */
+}
+
+/* Main Styles */
+main {
+    padding: 20px;
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+
+/* Box Styles for Text */
+.box {
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Padding for the content */
+    margin: 20px 0; /* Space between sections */
+    position: relative; /* For pseudo-element positioning */
+    overflow: hidden; /* Prevent overflow from pseudo-elements */
+    border-left: 5px solid #d5006d; /* Left border for color recall */
+}
+
+.box p {
+    color: #000000;
+}
+
+/* Header Styles */
+h2 {
+    font-size: 1.8em; /* Consistent header size */
+    color: #4b0082; /* Dark violet color */
+    margin-bottom: 10px; /* Margin below headers */
+}
+
+/* Paragraph Styles */
+p {
+    font-size: 1em; /* Regular font size for paragraphs */
+    color: #ffffff; /* Dark violet for better contrast */
+    line-height: 1.5; /* Improved line spacing */
+}
+
+/* Feature Styles */
+.feature {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px; /* Consistent padding */
+    margin: 20px 0; /* Space between features */
+    text-align: center; /* Centering content */
+    transition: transform 0.2s; /* Smooth transition for hover effect */
+}
+
+.feature:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+}
+
+.feature button {
+    margin: 10px 5px; /* Space between buttons */
+    width: 45%; /* Responsive button width */
+    padding: 15px; /* Consistent padding */
+    font-size: 1.1em; /* Consistent font size for buttons */
+    background-color: #d5006d; /* Color for emergency button */
+    color: white; /* Text color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background 0.3s ease; /* Transition effect */
+}
+
+.feature button:hover {
+    background-color: #a3004d; /* Darker shade on hover */
+}
+
+.feature p {
+    color: rgb(0, 0, 0);
+}
+
+/* Timer Styles */
+.timer {
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Padding for content */
+    margin: 20px 0; /* Space between sections */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    text-align: center; /* Centering content */
+}
+
+#countdown {
+    font-size: 2em; /* Larger font size for visibility */
+    font-weight: bold; /* Bold font for countdown */
+    color: #d5006d; /* Distinct color for countdown */
+    margin: 10px 0; /* Margin above and below countdown */
+}
+
+#minutesLeft {
+    font-size: 1.5em; /* Consistent font size */
+    color: white; /* Change text color to white for better contrast */
+    margin-top: 10px; /* Space above the minutes left text */
+    background: linear-gradient(135deg, #d5006d, #d28fdd); /* Gradient background */
+    padding: 15px; /* Padding for some space around the text */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    text-align: center; /* Center text alignment */
+    transition: transform 0.2s ease; /* Smooth transition for hover effect */
+}
+
+#minutesLeft:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Footer Styles */
+footer {
+    background: #9945d6; /* Deep purple background */
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-links {
+    width: 100%;
+    text-align: center;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.footer-links li {
+    margin-bottom: 15px;
+}
+
+.footer-links a {
+    color: white;
+    font-size: 1.1em;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: #ffd54f; /* Light yellow on hover */
+    transform: translateX(5px); /* Slight shift for interaction */
+}
+
+/* Social Media Icons */
+.footer-social {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.social-icon {
+    display: inline-block;
+    width: 50px; /* Same size for all icons */
+    height: 50px;
+    border-radius: 50%; /* Round shape */
+    overflow: hidden;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    border: 2px solid #ffffff; /* White border around icons */
+}
+
+.social-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Maintain aspect ratio */
+}
+
+.social-icon:hover {
+    transform: scale(1.1); /* Zoom effect */
+}
+
+.social-icon:hover img {
+    filter: brightness(1.2); /* Slight brightness increase */
+}
+
+/* Footer Bottom Section */
+.footer-bottom {
+    font-size: 1em;
+    font-weight: 400;
+}
+
+.footer-bottom p {
+    margin: 0;
+    font-size: 0.9em;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
+
+    .footer-links ul {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .footer-social {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .social-icon {
+        width: 40px; /* Slightly smaller on mobile */
+        height: 40px;
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+    .nav-links {
+        display: block;
+        margin-top: 10px;
+    }
+    
+    .nav-links li {
+        display: block;
+        margin: 5px 0;
+    }
+    
+
+    .hero-section p {
+        font-size: 1em; /* Smaller paragraph on mobile */
+    }
+    
+    .cta-button {
+        width: 100%; /* Full width on mobile */
+        text-align: center;
+    }
+
+    .feature button {
+        width: 100%; /* Full width on mobile */
+        margin: 10px 0; /* Stack buttons vertically */
+        padding: 20px; /* Consistent padding */
+    }
+
+    .box {
+        padding: 15px; /* Adjust padding for smaller screens */
+        margin: 15px 0; /* Adjust margin for smaller screens */
+    }
+}
+
+/* Slide Styles */
+.slide-box {
+    width: 100%; /* Full width */
+    overflow: hidden; /* Hide overflow from slides */
+    position: relative; /* Allow absolute positioning of slides */
+}
+
+.slides {
+    display: flex; /* Align slides horizontally */
+    transition: transform 0.5s ease-in-out; /* Smooth sliding effect */
+}
+
+.slide {
+    min-width: 100%; /* Each slide takes up full width */
+    box-sizing: border-box; /* Include padding and border in width */
+    opacity: 0; /* Initially hide slides */
+    transition: opacity 0.5s ease; /* Smooth fade effect */
+}
+
+.slide.active {
+    opacity: 1; /* Show active slide */
+}
+
+/* Button Styles */
+.next {
+    background-color: #d5006d; /* Color for the button */
+    color: white; /* Text color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 15px 20px; /* Increased padding for comfort */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-weight: bold; /* Bold text */
+    transition: background 0.3s ease; /* Transition effect */
+    margin: 20px; /* Space around buttons */
+}
+
+.next:hover {
+    background-color: #a3004d; /* Darker shade on hover */
+}
+
