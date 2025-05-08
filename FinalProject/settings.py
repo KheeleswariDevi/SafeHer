@@ -141,4 +141,4 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-GOOGLE_MAPS_API_KEY = 'AIzaSyAxfxa7Q0iir1psGZ-FYdiRBnSHsVsTG7s'
+GOOGLE_MAPS_API_KEY = {SecretKey}
