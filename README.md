@@ -1,30 +1,6 @@
 # SafeHer
 Final Year Project
 
-# How to Navigate and Read the Code on GitLab
-Our GitLab repository contains two key versions of our project, reflecting the evolution from our initial Django-only prototype to our final web application using Django as a backend and React as a frontend. To help you navigate the repository and locate the most relevant code, follow these guidelines:
-
-Master Branch (master): This branch contains our initial prototype of the website, built purely with Django. The source code for this version is located in:
-
- 		master → src
-
-
-App Branch (App): This is the main branch containing the final version of our web application. This is the project we are presenting, and it can be found in:
-
- 		App → sources
-
-
-# Why We Structured It This Way
-Initially, we started with a Django-only prototype, where the entire website was built using Django as both the backend and frontend. However, as the project evolved, we decided to integrate React for the frontend while keeping Django as the backend. This required significant changes to the codebase.
-
-Rather than overwriting our original prototype, we chose to create a separate branch (App) where we built the final version of the project. This approach allowed us to:
-Keep both versions of the project (the prototype and the final app) without losing any progress.
-
-Prevent conflicts and confusion while developing the new React based frontend.
-Ensure we have a backup in case we needed to refer back to the initial Django only version.
-
-Clearly separate development phases, making it easier for others to understand how the project evolved.
-
 # Overview
 SafeHer is designed to offer women an innovative and discreet tool for enhancing personal safety in everyday life. By focusing on real time tracking, emergency assistance, and stealth features, SafeHer aims to provide a reliable sense of protection in potentially dangerous situations. Unlike other safety apps that may offer isolated functionalities, SafeHer integrates advanced and user centric features into a seamless experience that prioritizes both effectiveness and discretion.
 
